@@ -1,0 +1,12 @@
+
+
+{% for y in tab %}
+
+{{y.id}}
+{{y.username}}
+{{y.nb_books}}
+<br>
+<a href="{{path('twig',{'p':y.username})}}">detail</a>
+{%else%}
+no books
+{% endfor %}
