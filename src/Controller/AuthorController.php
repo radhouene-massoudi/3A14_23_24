@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
+use App\Repository\AuthorRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,5 +40,17 @@ class AuthorController extends AbstractController
             'id'=>$id,
             'tab'=>$this->authors
         ]);
+    }
+    #[Route('/fetch', name: 'fetch')]
+    public function fetchAuthor(ManagerRegistry $mr){
+$em=$mr->getRepository(Author::class);
+$result=$em->findAll();
+dd($result);
+    }
+    #[Route('/fetchtwo', name: 'fetchtwo')]
+    public function fetchAuthortwo(AuthorRepository $repo){
+
+$result=$repo->findAll();
+dd($result);
     }
 }
