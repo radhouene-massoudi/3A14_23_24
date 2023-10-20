@@ -1,0 +1,24 @@
+<table border="2">
+<tr>
+    <td>id</td>
+    <td>title</td>
+    <td>category</td>
+    <td>Action</td>
+</tr>
+{% for b in resul%}
+<tr>
+    <td>{{b.id}}</td>
+    <td>{{b.title}}</td>
+    <td>{{b.category}}</td>
+    <td><a href="{{path('update',{'id':b.id})}}">update</a>
+        <a href="{{path('book',{'id':b.id})}}">detail</a>
+        <a href="{{path('removebook',{'id':b.id})}}">remove</a>
+    
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+
+
+
