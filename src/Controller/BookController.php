@@ -127,4 +127,10 @@ class BookController extends AbstractController
            'r'=> $result
         ]);
     }
+    #[Route('/qb', name: 'qb')]
+    public function qb(BookRepository $repo)
+    {
+        $result=$repo->fetchbooks('yassine');
+dd($result);
+    }
 }

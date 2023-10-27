@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Null_;
 
 /**
  * @extends ServiceEntityRepository<Book>
@@ -52,4 +53,18 @@ $query=  $em->createQuery("select b from App\Entity\Book b join b.authors a wher
 $query->setParameter('u',$author);
 return $query->getResult();
 }
+public function fetchbooks($username=null){
+   $request=$this->createQueryBuilder('b');//select * from book
+   $result=$request
+   ->select('b.title')
+   ->join('b.authors','a')
+   ->addSelect('a.username');
+   if($username!=null){
+    $result->where('a.username=:u')
+   ->setParameter('u',$username);
+}
+return $result->getQuery()
+   ->getResult();
+   
+    }
 }
