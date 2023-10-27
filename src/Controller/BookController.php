@@ -114,9 +114,14 @@ class BookController extends AbstractController
     }
 
     #[Route('/dqltwo', name: 'dqltwo')]
-    public function dqltwo(BookRepository $repo)
+    public function dqltwo(BookRepository $repo,Request $request)
     {
-        $result=$repo->fetchbookbyauthor('yassine');
+        $result=$repo->findAll();
+        if($request->isMethod('post')){
+           $value=$request->get('test'); 
+           $result=$repo->fetchbookbyauthor($value);
+        }
+        
        
         return $this->render('book/search.html.twig',[
            'r'=> $result
