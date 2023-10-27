@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,5 +97,29 @@ class BookController extends AbstractController
         $em->remove($result);
         $em->flush();
         return $this->redirectToRoute('books'); 
+    }
+
+    #[Route('/dql', name: 'dql')]
+    public function dql(EntityManagerInterface $em)
+    {
+        
+        $dql=$em->createQuery("select b from App\Entity\Book b join b.authors a  ");
+//$dql->setParameter('1','esprit');
+        $result=$dql->getResult();
+//dd($result);
+//dd($result);
+        return $this->render('book/search.html.twig',[
+           'r'=> $result
+        ]);
+    }
+
+    #[Route('/dqltwo', name: 'dqltwo')]
+    public function dqltwo(BookRepository $repo)
+    {
+        $result=$repo->fetchbookbyauthor('yassine');
+       
+        return $this->render('book/search.html.twig',[
+           'r'=> $result
+        ]);
     }
 }

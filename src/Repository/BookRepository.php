@@ -45,4 +45,11 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function fetchbookbyauthor($author){
+$em=$this->getEntityManager();
+$query=  $em->createQuery("select b from App\Entity\Book b join b.authors a where a.username=:u");
+$query->setParameter('u',$author);
+return $query->getResult();
+}
 }
